@@ -101,6 +101,7 @@ const linkedList = function () {
         return insertAt(value, index, pointer.nextNode, position + 1);
     }
 
+    // removes node at chosen index
     const removeAt = (index, pointer = currentHead, position = 0) => {
         if (isNaN(index) || index < 0 || index >= size()) return null;
         if (!currentHead) return null;
