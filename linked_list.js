@@ -1,4 +1,4 @@
-import Node from "./nodes.js";
+import { Node } from "./nodes.js";
 
 const linkedList = function () {
     let currentHead = null;
