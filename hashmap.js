@@ -29,23 +29,20 @@ const hashMap = function () {
     const set = (key, value) => {
         const item = { key: key, value: value };
         const index = hash(key);
+        // console.log(item, { index });
 
         limitationSnippet(index, bucketArray);
 
         if (!bucketArray[index]) {
             bucketArray[index] = linkedList();
-            bucketArray[index].append(item);
             size++;
         } else if (!bucketArray[index].contains(item)) {
-            bucketArray[index].append(item);
             size++
         } else {
             let linkedIndex = bucketArray[index].find(item);
             bucketArray[index].removeAt(linkedIndex);
-            bucketArray[index].insertAt(item, linkedIndex);
         }
-        console.log(bucketArray);
-        console.log(bucketArray[index].toString())
+        bucketArray[index].append(item);
         if (size / bucketArray.length > loadFactor) resize();
     }
 
@@ -53,19 +50,38 @@ const hashMap = function () {
         const tempBucket = bucketArray;
         capacity = capacity * 2;
         bucketArray = new Array(capacity).fill(null);
+        size = 0;
         tempBucket.forEach((bucket) => {
             if (bucket) {
                 let current = bucket.head();
                 while (current) {
-                    console.log(current);
-                    set(current.value.key, current.value.value);
-                    current = current.next;
+
+                    const { key, value } = current.value
+                    set(key, value);
+                    current = current.nextNode;
                 }
             }
         })
     }
 
-    return { hash, set }
+    const get = (key) => {
+        const hashedKey = hash(key);
+        // console.log({ hashedKey });
+        if (!bucketArray[hashedKey]) return null;
+        let current = bucketArray[hashedKey].head();
+        while (current) {
+
+            if (current.value.key === key) return current.value;
+            current = current.nextNode;
+        }
+        return null;
+    }
+
+    const has = (key) => {
+        return get(key) !== null;
+    }
+
+    return { set, get, has }
 }
 
 
