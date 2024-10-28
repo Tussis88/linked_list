@@ -18,8 +18,13 @@ test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden') //
 
-console.log("get:")
+console.log("get:");
 console.log(test.get("lion"));
 console.log(test.get("broccoli"));
 console.log(test.get("grape"));
+
+console.log("has:");
+console.log(test.has("apple"));
+console.log(test.has("lion"));
+console.log(test.has("broccoli"));
 
