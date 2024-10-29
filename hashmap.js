@@ -62,7 +62,7 @@ const hashMap = function () {
                 }
             }
         })
-    }
+    };
 
     const get = (key) => {
         const hashedKey = hash(key);
@@ -70,18 +70,45 @@ const hashMap = function () {
         if (!bucketArray[hashedKey]) return null;
         let current = bucketArray[hashedKey].head();
         while (current) {
-
             if (current.value.key === key) return current.value;
             current = current.nextNode;
-        }
+        };
         return null;
-    }
+    };
 
     const has = (key) => {
         return get(key) !== null;
-    }
+    };
 
-    return { set, get, has }
+    const remove = (key) => {
+        // const hashedKey = hash(key);
+        // if (!bucketArray[hashedKey]) return false;
+        // let current = bucketArray[hashedKey].head();
+        // while (current) {
+        //     if (current.value.key === key) {
+        //         const indexToDelete = bucketArray[hashedKey].find(current.value);
+        //         bucketArray[hashedKey].removeAt(indexToDelete);
+        //         return true;
+        //     };
+        //     current = current.nextNode;
+        // };
+        // return false;
+        const itemToDelete = get(key);
+        if (!itemToDelete) return false;
+
+        for (let bucket of bucketArray) {
+            if (bucket) {
+                const index = bucket.find(itemToDelete);
+                if (index) {
+                    bucket.removeAt(index);
+                    console.log("siamo qui");
+                    return true;
+                }
+            }
+        }
+    };
+
+    return { set, get, has, remove }
 }
 
 

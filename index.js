@@ -28,3 +28,8 @@ console.log(test.has("apple"));
 console.log(test.has("lion"));
 console.log(test.has("broccoli"));
 
+console.log("remove:");
+console.log(test.remove("lion"));
+console.log(test.get("lion"));
+console.log(test.get("grape"));
+console.log(test.remove("broccoli"));
