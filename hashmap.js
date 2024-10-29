@@ -81,34 +81,71 @@ const hashMap = function () {
     };
 
     const remove = (key) => {
-        // const hashedKey = hash(key);
-        // if (!bucketArray[hashedKey]) return false;
-        // let current = bucketArray[hashedKey].head();
-        // while (current) {
-        //     if (current.value.key === key) {
-        //         const indexToDelete = bucketArray[hashedKey].find(current.value);
-        //         bucketArray[hashedKey].removeAt(indexToDelete);
-        //         return true;
-        //     };
-        //     current = current.nextNode;
-        // };
-        // return false;
         const itemToDelete = get(key);
         if (!itemToDelete) return false;
 
         for (let bucket of bucketArray) {
             if (bucket) {
                 const index = bucket.find(itemToDelete);
-                if (index) {
+                if (index !== null) {
                     bucket.removeAt(index);
-                    console.log("siamo qui");
+                    size--;
                     return true;
                 }
             }
         }
     };
 
-    return { set, get, has, remove }
+    const length = () => size;
+
+    const clear = () => {
+        capacity = 8;
+        bucketArray = new Array(capacity).fill(null);
+        size = 0;
+    };
+
+    const keys = () => {
+        const keysArray = [];
+        bucketArray.forEach(bucket => {
+            if (bucket && bucket.head()) {
+                let current = bucket.head();
+                while (current) {
+                    keysArray.push(current.value.key);
+                    current = current.nextNode;
+                };
+            };
+        });
+        return keysArray;
+    };
+
+    const values = () => {
+        const keysArray = [];
+        bucketArray.forEach(bucket => {
+            if (bucket && bucket.head()) {
+                let current = bucket.head();
+                while (current) {
+                    keysArray.push(current.value.value);
+                    current = current.nextNode;
+                };
+            };
+        });
+        return keysArray;
+    };
+
+    const entries = () => {
+        const keysArray = [];
+        bucketArray.forEach(bucket => {
+            if (bucket && bucket.head()) {
+                let current = bucket.head();
+                while (current) {
+                    keysArray.push(current.value);
+                    current = current.nextNode;
+                };
+            };
+        });
+        return keysArray;
+    };
+    return { set, get, has, remove, length, clear, keys, values, entries }
 }
 
 
