@@ -34,9 +34,29 @@ const tree = (array) => {
         return rootNode;
     }
 
+
+    // insert a new Node in the tree
+    const insert = (value, currentNode = root) => {
+        if (currentNode.data === value) return;
+
+
+    };
+
+    // find a value and return it's node
+    const find = (value, currentNode = root) => {
+        if (currentNode === null || currentNode.data === value) return currentNode;
+
+        if (currentNode.data < value) {
+            return find(value, currentNode.right);
+        } else {
+            return find(value, currentNode.left);
+        }
+    }
+
     let root = buildTree(sortedArray);
 
-    return { sortedArray, root };
+
+    return { sortedArray, root, find };
 }
 
 export { arrayRandomizer, tree, prettyPrint }

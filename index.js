@@ -8,3 +8,5 @@ import { hashTest } from "./test_hashmap.js";
 const test = tree(arrayRandomizer(20));
 console.log(test.sortedArray);
 prettyPrint(test.root);
+
+console.log(test.find(3))
