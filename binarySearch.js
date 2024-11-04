@@ -20,7 +20,6 @@ const arrayRandomizer = (size) => {
 const tree = (array) => {
     const sortedArray = [...new Set(array)].sort((a, b) => a - b);
 
-
     // create the binary tree and returns the rootNode
     const buildTree = (arrayToTree) => {
         if (arrayToTree.length === 0) return null;
@@ -37,9 +36,16 @@ const tree = (array) => {
 
     // insert a new Node in the tree
     const insert = (value, currentNode = root) => {
-        if (currentNode.data === value) return;
+        if (currentNode === null) return new TreeNode(value);
+        if (currentNode.data === value) return currentNode;
 
 
+        if (currentNode.data < value) {
+            currentNode.right = insert(value, currentNode.right);
+        } else {
+            currentNode.left = insert(value, currentNode.left);
+        }
+        return currentNode;
     };
 
     // find a value and return it's node
@@ -51,12 +57,12 @@ const tree = (array) => {
         } else {
             return find(value, currentNode.left);
         }
-    }
+    };
 
     let root = buildTree(sortedArray);
 
 
-    return { sortedArray, root, find };
+    return { sortedArray, root, insert, find };
 }
 
 export { arrayRandomizer, tree, prettyPrint }

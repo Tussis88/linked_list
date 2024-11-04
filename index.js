@@ -9,4 +9,7 @@ const test = tree(arrayRandomizer(20));
 console.log(test.sortedArray);
 prettyPrint(test.root);
 
-console.log(test.find(3))
+test.insert(125);
+prettyPrint(test.root);
+test.insert(27);
+prettyPrint(test.root);
