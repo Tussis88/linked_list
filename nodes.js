@@ -16,7 +16,7 @@ class HashNode {
 
 class TreeNode {
     constructor(value) {
-        this.value = value;
+        this.data = value;
         this.left = null;
         this.right = null;
     }
