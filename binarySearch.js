@@ -86,10 +86,30 @@ const tree = (array) => {
         }
     };
 
+    // traverse the tree in breadth-first level order and call the callback on each node as it traverses
+    const levelOrder = (callback) => {
+        if (typeof callback !== "function") throw new Error("levelOrder must be used with functions");
+
+        const queue = [root];
+        const levelOrderList = [];
+        while (queue.length > 0) {
+            const currentNode = queue.shift();
+            levelOrderList.push(callback(currentNode));
+
+            const enqueueList = [
+                currentNode.left,
+                currentNode.right
+            ].filter((value) => value);
+
+            queue.push(...enqueueList);
+        }
+        if (levelOrderList.length > 0) return levelOrderList;
+    };
+
     let root = buildTree(sortedArray);
 
 
-    return { sortedArray, root, insert, remove, find };
+    return { sortedArray, root, insert, remove, find, levelOrder };
 }
 
 export { arrayRandomizer, tree, prettyPrint }

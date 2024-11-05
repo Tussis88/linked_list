@@ -26,3 +26,13 @@ prettyPrint(test.root);
 test.remove(55);
 prettyPrint(test.root);
 console.groupEnd();
+
+console.groupCollapsed("find");
+console.log(test.find(125));
+console.log(test.find(12));
+console.groupEnd();
+
+console.groupCollapsed("levelOrder");
+console.log(test.levelOrder((node) => node.data * 10));
+console.log(test.levelOrder("gne"));
+console.groupEnd();
