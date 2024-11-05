@@ -48,6 +48,33 @@ const tree = (array) => {
         return currentNode;
     };
 
+    // remove a node from the tree
+    const remove = (value, currentNode = root) => {
+        if (currentNode === null) return currentNode;
+
+        if (currentNode.data === value) {
+            // rimuovi nodo
+            if (currentNode.left && currentNode.right) {
+                let successorNode = currentNode;
+                while (successorNode.left) {
+                    successorNode = successorNode.left;
+                };
+                currentNode.data = successorNode.data;
+                currentNode.right = remove(successorNode.value, currentNode.right);
+                return currentNode;
+            } else {
+                const replacementNode = currentNode.right || currentNode.left;
+                currentNode = null;
+                return replacementNode;
+            }
+        } else if (currentNode.data < value) {
+            currentNode.right = remove(value, currentNode.right);
+        } else {
+            currentNode.left = remove(value, currentNode.left);
+        }
+        return currentNode;
+    };
+
     // find a value and return it's node
     const find = (value, currentNode = root) => {
         if (currentNode === null || currentNode.data === value) return currentNode;
@@ -62,7 +89,7 @@ const tree = (array) => {
     let root = buildTree(sortedArray);
 
 
-    return { sortedArray, root, insert, find };
+    return { sortedArray, root, insert, remove, find };
 }
 
 export { arrayRandomizer, tree, prettyPrint }
