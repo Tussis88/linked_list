@@ -34,6 +34,9 @@ const tree = (array) => {
     }
 
 
+    let root = buildTree(sortedArray);
+
+
     // insert a new Node in the tree
     const insert = (value, currentNode = root) => {
         if (currentNode === null) return new TreeNode(value);
@@ -106,10 +109,72 @@ const tree = (array) => {
         if (levelOrderList.length > 0) return levelOrderList;
     };
 
-    let root = buildTree(sortedArray);
 
+    const preOrder = (callback, currentNode = root, orderList = []) => {
+        if (typeof callback !== "function") throw new Error("preOrder must be used with functions");
+        if (currentNode === null) return;
 
-    return { sortedArray, root, insert, remove, find, levelOrder };
+        orderList.push(callback(currentNode));
+        preOrder(callback, currentNode.left, orderList);
+        preOrder(callback, currentNode.right, orderList);
+
+        if (orderList.length > 0) return orderList;
+    };
+
+    const inOrder = (callback, currentNode = root, orderList = []) => {
+        if (typeof callback !== "function") throw new Error("inOrder must be used with functions");
+        if (currentNode === null) return;
+
+        inOrder(callback, currentNode.left, orderList);
+        orderList.push(callback(currentNode));
+        inOrder(callback, currentNode.right, orderList);
+
+        if (orderList.length > 0) return orderList;
+    };
+
+    const postOrder = (callback, currentNode = root, orderList = []) => {
+        if (typeof callback !== "function") throw new Error("postOrder must be used with functions");
+        if (currentNode === null) return;
+
+        postOrder(callback, currentNode.left, orderList);
+        postOrder(callback, currentNode.right, orderList);
+        orderList.push(callback(currentNode));
+
+        if (orderList.length > 0) return orderList;
+    };
+
+    // returns the given node’s height
+    const height = (currentNode = root) => {
+        if (currentNode === null) return 0;
+
+        const left = height(currentNode.left);
+        const right = height(currentNode.right);
+
+        return Math.max(left, right) + 1;
+    };
+
+    // returns the given node’s depth
+    const depth = (value, currentNode = root, counter = 0) => {
+        if (currentNode === null) return;
+        if (currentNode.data === value) return counter;
+
+        if (currentNode.data < value) {
+            return depth(value, currentNode.right, counter + 1);
+        } else {
+            return depth(value, currentNode.left, counter + 1);
+        }
+    };
+
+    const isBalanced = () => {
+
+    }
+
+    const rebalance = () => {
+        const sortedRebalancedArray = [...new Set(levelOrder((node) => node.data))].sort((a, b) => a - b);
+        root = buildTree(sortedRebalancedArray);
+    }
+
+    return { sortedArray, root, insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth, rebalance };
 }
 
 export { arrayRandomizer, tree, prettyPrint }
