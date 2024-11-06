@@ -165,16 +165,26 @@ const tree = (array) => {
         }
     };
 
-    const isBalanced = () => {
+    const isBalanced = (currentNode = root) => {
+        if (currentNode === null) return 0;
 
-    }
+        const left = isBalanced(currentNode.left);
+        if (left === false) return false;
+        const right = isBalanced(currentNode.right);
+        if (right === false) return false;
+
+        if (Math.abs(left - right) > 1) return false;
+        return Math.max(left, right) + 1;
+    };
 
     const rebalance = () => {
         const sortedRebalancedArray = [...new Set(levelOrder((node) => node.data))].sort((a, b) => a - b);
         root = buildTree(sortedRebalancedArray);
     }
 
-    return { sortedArray, root, insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth, rebalance };
+    const getRoot = () => root;
+
+    return { sortedArray, getRoot, insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth, rebalance, isBalanced };
 }
 
 export { arrayRandomizer, tree, prettyPrint }

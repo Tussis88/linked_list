@@ -10,21 +10,21 @@ const test = tree(arrayRandomizer(20));
 
 console.groupCollapsed("basic test");
 console.log(test.sortedArray);
-prettyPrint(test.root);
+prettyPrint(test.getRoot());
 console.groupEnd();
 
 console.groupCollapsed("insert");
 test.insert(125);
-prettyPrint(test.root);
+prettyPrint(test.getRoot());
 test.insert(27);
-prettyPrint(test.root);
+prettyPrint(test.getRoot());
 console.groupEnd();
 
 console.groupCollapsed("remove");
 test.remove(27);
-prettyPrint(test.root);
+prettyPrint(test.getRoot());
 test.remove(55);
-prettyPrint(test.root);
+prettyPrint(test.getRoot());
 console.groupEnd();
 
 console.groupCollapsed("find");
@@ -56,7 +56,9 @@ test.insert(126);
 test.insert(127);
 test.insert(129);
 test.insert(130);
-prettyPrint(test.root);
+prettyPrint(test.getRoot());
+console.log(test.isBalanced());
 test.rebalance();
-prettyPrint(test.root);
+prettyPrint(test.getRoot());
+console.log(test.isBalanced());
 console.groupEnd();
