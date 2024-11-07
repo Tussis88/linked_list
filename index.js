@@ -7,5 +7,5 @@ import { linkedTest } from "./test_linked.js";
 import { hashTest } from "./test_hashmap.js";
 import { binaryTest } from "./test_binary.js";
 
-knightMoves([0, 1], [2, 3]);
-knightMoves([0, 2], [1, 4]);
+console.log(knightMoves([0, 0], [3, 3]))
+console.log(knightMoves([0, 0], [7, 7]))
